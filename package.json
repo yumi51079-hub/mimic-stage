@@ -1,1 +1,14 @@
-{"name":"mimic-stage-online","version":"1.0.0","private":true,"type":"module","engines":{"node":">=24"},"scripts":{"start":"node server.mjs"}}
+{
+  "name": "mimic-stage-online",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "samples": "node fetch-samples.mjs",
+    "test": "node check.mjs && node check-samples.mjs"
+  }
+}

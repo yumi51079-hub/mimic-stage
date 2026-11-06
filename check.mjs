@@ -6,7 +6,7 @@ process.env.PORT='0';process.env.DATA_DIR=await mkdtemp(join(tmpdir(),'mimic-che
 const {server}=await import('./server.mjs');if(!server.listening)await new Promise(r=>server.once('listening',r));
 const base='http://127.0.0.1:'+server.address().port;
 try{
- const html=await(await fetch(base)).text();assert(html.includes('全員が自分のMP3を入れる'));
+ const html=await(await fetch(base)).text();assert(html.includes('実在ミーム音声ライブラリー'));
  const make=async name=>(await(await fetch(base+'/api/rooms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})})).json());
  const [h,h2]=await Promise.all([make('Host'),make('Other Host')]);assert(h.code&&h.token&&h2.code);
  const g=await(await fetch(base+'/api/rooms/'+h.code+'/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'Guest'})})).json();assert(g.id);
