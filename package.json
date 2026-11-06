@@ -9,6 +9,6 @@
   "scripts": {
     "start": "node server.mjs",
     "samples": "node fetch-samples.mjs",
-    "test": "node check.mjs && node check-samples.mjs"
+    "test": "node check.mjs && node check-solo.mjs && node check-samples.mjs"
   }
 }

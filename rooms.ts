@@ -45,7 +45,7 @@ export async function roomsAPI(req:Request,env:Env){
  if(action==='begin'&&req.method==='POST'){
   if(!host)fail('ホストのみ操作できます。',403);if(room.phase!=='setup')fail('すでにゲームが始まっています。',409);
   const list=(await env.DB.prepare('SELECT id,name,title,duration,has_clip FROM players WHERE room=? ORDER BY joined,id').bind(code).all<any>()).results;
-  if(list.length<2)fail('2人以上で開始できます。友達を招待してください。');if(list.some(p=>!p.has_clip))fail('全員のMP3アップロードを待ってください。',409);
+  if(list.length<1)fail('プレイヤーがいません。');if(list.some(p=>!p.has_clip))fail('全員のMP3アップロードを待ってください。',409);
   await env.DB.batch([env.DB.prepare("UPDATE rooms SET phase='lobby',round=1,title=?,duration=?,queue=? WHERE code=? AND phase='setup'").bind(list[0].title,list[0].duration,JSON.stringify(list),code),env.DB.prepare('UPDATE players SET ready=0,score=NULL,pitch=NULL,rhythm=NULL,audio=0,total=0 WHERE room=?').bind(code)]);return json({ok:true});
  }
  if(action==='unready'&&req.method==='POST'){
