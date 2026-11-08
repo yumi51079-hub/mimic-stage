@@ -1,0 +1,10 @@
+import {mkdir,copyFile,readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+execFileSync(process.execPath,['fetch-samples.mjs'],{stdio:'inherit'});
+await mkdir('public/samples',{recursive:true});
+await mkdir('public/api',{recursive:true});
+await copyFile('index.html','public/index.html');
+const catalog=JSON.parse(await readFile('sample-catalog.json','utf8'));
+for(const item of catalog)await copyFile('samples/'+item.file,'public/samples/'+item.file);
+await writeFile('public/api/samples',JSON.stringify(catalog.map(({url,sha256,bytes,...item})=>item)));
+await writeFile('public/_headers','/api/samples\n  Content-Type: application/json; charset=utf-8\n  Cache-Control: public, max-age=300\n/samples/*\n  Cache-Control: public, max-age=86400\n');

@@ -2,3 +2,6 @@ data/
 node_modules/
 .env
 samples/
+
+public/
+.wrangler/

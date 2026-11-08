@@ -9,6 +9,12 @@
   "scripts": {
     "start": "node server.mjs",
     "samples": "node fetch-samples.mjs",
-    "test": "node check.mjs && node check-solo.mjs && node check-samples.mjs"
+    "test": "node check.mjs && node check-solo.mjs && node check-samples.mjs",
+    "build": "node cloudflare/build.mjs",
+    "deploy": "wrangler deploy",
+    "test:cloudflare": "node cloudflare/check.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.158.0"
   }
 }
